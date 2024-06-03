@@ -4,11 +4,14 @@ import '../styles/global.css';
 
 // data source
 // replace temporary JSON placeholder API
-const source = 'https://jsonplaceholder.typicode.com/users';
+const picSource = 'https://dog.ceo/api/breeds/image/random/5';
+const factSource = 'https://dog-api.kinduff.com/api/facts?number=5';
 // fetch the data
-const res = await fetch(source); 
+const picRes = await fetch(picSource);
+const factRes = await fetch(factSource); 
 // store retreived data
-const data = await res.json();
+const picData = await picRes.json();
+const factData = await factRes.json();
 ---
 
 <html lang="en">
@@ -21,7 +24,7 @@ const data = await res.json();
 		<!-- Normalize CSS -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
 
-		<title>Retreive and and display external API data with Astro</title>
+		<title>Dog Facts!</title>
 	</head>
 	<body>
 		
@@ -35,20 +38,14 @@ const data = await res.json();
 		  
 				<!-- Your API Data -->
 				{
-					data.map( item =>
-					<li class="card-item">
-						<a href="#">
-							<figure class="card">
-							<img src="https://assets.codepen.io/16425/image-placeholder.png" alt="Placeholder">
-							<figcaption class="caption">
-								<h3 class="caption-title">{item.name}</h3>
-								<p>{item.company.catchPhrase}</p>
-							</figcaption>
-							</figure>
-						</a>
-					</li> 
-					)
+					picData.message.map((pic, index) => (
+						<li class="card">
+							<img src={pic} alt="dog" />
+							<p>{factData.facts[index]}</p>
+						</li>
+					))
 				}
+
 		  
 			</ul>
 		  </main>
